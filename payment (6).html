@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Charge Settlement · Diriyah</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,0,500;9..144,1,300;9..144,1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:        #000000;
+    --black-soft:   #1A1A1A;
+    --ink:          #2A2A2A;
+    --text-mid:     #3A3A3A;
+    --grey:         #4A4A4A;
+    --muted:        #8C8C8C;
+
+    --cream:        #E6D6C4;
+    --cream-pale:   #F2E8DA;
+    --cream-soft:   #FAF6EF;
+    --card:         #FFFFFF;
+
+    --border:       #D4C4B0;
+    --border-soft:  #E8DCC8;
+
+    --gold:         #C9A45C;   /* reserved for Diamond tier — not used here */
+    --success:      #4A6741;
+    --danger:       #7A2E1F;
+
+    --shadow-md:    0 12px 32px rgba(26,26,26,0.08);
+    --shadow-lg:    0 32px 60px rgba(0,0,0,0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    background: var(--cream-soft);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ================ TOPBAR ================ */
+  .topbar {
+    background: var(--cream);
+    border-bottom: 1px solid var(--black);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .topbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .topbar-brand img {
+    height: 44px;
+    width: auto;
+  }
+  .topbar-brand .fallback {
+    font-family: 'Fraunces', serif;
+    color: var(--black);
+    font-size: 22px;
+    letter-spacing: 4.5px;
+    font-weight: 400;
+  }
+  .topbar-divider {
+    width: 1px; height: 30px;
+    background: var(--black);
+    opacity: 0.4;
+  }
+  .topbar-brand-sub {
+    font-size: 10px;
+    color: var(--black);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .secure-lbl {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    color: var(--black);
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .secure-lbl .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--success);
+  }
+
+  /* ================ MAIN ================ */
+  main {
+    min-height: calc(100vh - 73px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 56px 24px 80px;
+  }
+  .pay-wrap {
+    width: 100%;
+    max-width: 500px;
+    animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .pay-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--grey);
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .pay-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 40px;
+    line-height: 1.1;
+    text-align: center;
+    color: var(--black-soft);
+    letter-spacing: -0.6px;
+    margin-bottom: 8px;
+  }
+  .pay-title em { font-style: italic; font-weight: 400; }
+  .pay-sub {
+    text-align: center;
+    font-size: 13px;
+    color: var(--grey);
+    margin-bottom: 36px;
+  }
+
+  /* Amount hero — solid black, no gradient overlays */
+  .amount-card {
+    background: var(--black);
+    color: #fff;
+    border-radius: 16px;
+    padding: 40px 32px;
+    text-align: center;
+    margin-bottom: 24px;
+    border: 1px solid var(--black);
+  }
+  .amount-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--cream);
+    font-weight: 500;
+    margin-bottom: 14px;
+    opacity: 0.9;
+  }
+  .amount-value {
+    font-family: 'Fraunces', serif;
+    font-size: 64px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -2px;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  .amount-value .ccy {
+    font-size: 22px;
+    color: var(--cream);
+    margin-right: 8px;
+    letter-spacing: 0;
+    vertical-align: 10px;
+    font-weight: 400;
+  }
+  .amount-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+
+  /* Details card */
+  .detail-card {
+    background: var(--card);
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin-bottom: 20px;
+  }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-row .lbl {
+    font-size: 10px;
+    color: var(--grey);
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  .detail-row .val {
+    font-size: 13px;
+    color: var(--black-soft);
+    font-weight: 500;
+    text-align: right;
+  }
+  .detail-row .val .mono {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+  }
+
+  /* Payment method */
+  .method-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--grey);
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .method-select {
+    width: 100%;
+    height: 52px;
+    padding: 0 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    background: #fff url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%234A4A4A' stroke-width='1.5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 18px center;
+    appearance: none;
+    -webkit-appearance: none;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .method-select:focus {
+    outline: none;
+    border-color: var(--black);
+  }
+
+  /* Pay button */
+  .pay-btn {
+    width: 100%;
+    height: 56px;
+    background: var(--black);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .pay-btn:hover {
+    background: var(--black-soft);
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.18);
+  }
+  .pay-btn .lock { font-size: 11px; opacity: 0.85; }
+
+  /* Terms */
+  .terms {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .terms a {
+    color: var(--grey);
+    text-decoration: underline;
+  }
+
+  /* Success state */
+  .success-card {
+    display: none;
+    background: var(--card);
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 48px 36px;
+    text-align: center;
+    animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .success-card.show { display: block; }
+  .success-icon {
+    width: 68px; height: 68px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    background: var(--success);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 32px;
+    position: relative;
+  }
+  .success-icon::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid rgba(74,103,65,0.25);
+  }
+  .success-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 32px;
+    color: var(--black-soft);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .success-sub {
+    font-size: 13px;
+    color: var(--grey);
+    margin-bottom: 24px;
+  }
+  .success-amt {
+    font-family: 'Fraunces', serif;
+    font-size: 38px;
+    color: var(--black-soft);
+    font-weight: 300;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+  }
+  .success-amt .ccy {
+    font-size: 16px;
+    color: var(--grey);
+    margin-right: 6px;
+    font-weight: 400;
+  }
+  .success-details {
+    text-align: left;
+    background: var(--cream-soft);
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+  }
+  .success-details .detail-row {
+    padding: 8px 0;
+    border-color: var(--border-soft);
+  }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--ink);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .back-btn:hover {
+    border-color: var(--black);
+    background: var(--cream-pale);
+  }
+
+  /* Hide form when success */
+  .pay-form.hide { display: none; }
+
+  /* Responsive */
+  @media (max-width: 560px) {
+    .topbar { padding: 14px 18px; flex-wrap: wrap; gap: 12px; }
+    main { padding: 32px 16px 60px; }
+    .pay-title { font-size: 32px; }
+    .amount-value { font-size: 52px; }
+    .amount-card { padding: 32px 22px; }
+    .detail-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-brand">
+    <img src="assets/logo.svg" alt="Diriyah"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='inline';" />
+    <span class="fallback" style="display:none;">DIRIYAH</span>
+    <div class="topbar-divider"></div>
+    <div class="topbar-brand-sub">Diriyah Living</div>
+  </div>
+  <div class="secure-lbl">
+    <span class="dot"></span>
+    Secure Settlement
+  </div>
+</header>
+
+<main>
+  <div class="pay-wrap">
+
+    <!-- Payment form -->
+    <div class="pay-form" id="payForm">
+      <div class="pay-eyebrow">Service Charge Settlement</div>
+      <h1 class="pay-title">Confirm your <em>payment</em></h1>
+      <p class="pay-sub">Review the details below and choose your payment method.</p>
+
+      <div class="amount-card">
+        <div class="amount-label">Amount to pay</div>
+        <div class="amount-value"><span class="ccy">SAR</span><span id="amountBig">0</span></div>
+        <div class="amount-desc" id="amountDesc">—</div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-row">
+          <span class="lbl">Property</span>
+          <span class="val" id="propertyVal">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="lbl">Reference</span>
+          <span class="val"><span class="mono" id="refVal">—</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="lbl">Amount</span>
+          <span class="val"><span class="mono" id="amountVal">—</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="lbl">Billed to</span>
+          <span class="val">Andy Thomas</span>
+        </div>
+      </div>
+
+      <label class="method-label" for="method">Payment method</label>
+      <select class="method-select" id="method">
+        <option>Visa · ending 4821</option>
+        <option>Mastercard · ending 9034</option>
+        <option>Apple Pay</option>
+        <option>Bank transfer · NCB</option>
+        <option>Add new card</option>
+      </select>
+
+      <button class="pay-btn" onclick="confirmPay()">
+        <span class="lock">🔒</span>
+        <span id="payBtnText">Pay now</span>
+      </button>
+
+      <p class="terms">
+        This is a secure settlement link provided by Diriyah Living. Your payment is protected.<br/>
+        By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+      </p>
+    </div>
+
+    <!-- Success state -->
+    <div class="success-card" id="successCard">
+      <div class="success-icon">✓</div>
+      <h2 class="success-title">Payment confirmed</h2>
+      <p class="success-sub">Your service charge has been settled. A receipt has been sent to your email.</p>
+
+      <div class="success-amt"><span class="ccy">SAR</span><span id="successAmt">0</span></div>
+
+      <div class="success-details">
+        <div class="detail-row">
+          <span class="lbl">Reference</span>
+          <span class="val"><span class="mono" id="successRef">—</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="lbl">Property</span>
+          <span class="val" id="successProp">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="lbl">Status</span>
+          <span class="val" style="color:var(--success);font-weight:600;">✓ Settled</span>
+        </div>
+        <div class="detail-row">
+          <span class="lbl">Date</span>
+          <span class="val" id="successDate">—</span>
+        </div>
+      </div>
+
+      <a class="back-btn" href="index.html">
+        ← Back to Diriyah Living
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  // Parse URL params
+  function getParam(name) {
+    var m = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+  }
+
+  var ref    = getParam('ref')    || 'DRY-2026-Q2';
+  var amount = getParam('amount') || '0';
+  var label  = getParam('label')  || 'Service Charge';
+
+  // Format amount with thousand separators
+  function fmt(n) {
+    return Number(n).toLocaleString('en-US');
+  }
+
+  // Populate fields
+  document.getElementById('amountBig').textContent  = fmt(amount);
+  document.getElementById('amountVal').textContent  = 'SAR ' + fmt(amount);
+  document.getElementById('amountDesc').textContent = label;
+  document.getElementById('propertyVal').textContent = label;
+  document.getElementById('refVal').textContent     = ref;
+  document.getElementById('payBtnText').textContent = 'Pay SAR ' + fmt(amount);
+
+  document.title = 'Pay SAR ' + fmt(amount) + ' · Diriyah Living';
+
+  // Populate success fields
+  document.getElementById('successAmt').textContent  = fmt(amount);
+  document.getElementById('successRef').textContent  = ref;
+  document.getElementById('successProp').textContent = label;
+
+  // Today's date
+  var today = new Date();
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var dateStr = today.getDate() + ' ' + months[today.getMonth()] + ' ' + today.getFullYear();
+  document.getElementById('successDate').textContent = dateStr;
+
+  // Mock pay flow
+  function confirmPay() {
+    var btn = document.querySelector('.pay-btn');
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+    btn.style.cursor = 'wait';
+    document.getElementById('payBtnText').textContent = 'Processing…';
+
+    setTimeout(function() {
+      document.getElementById('payForm').classList.add('hide');
+      document.getElementById('successCard').classList.add('show');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }, 1200);
+  }
+</script>
+
+</body>
+</html>
