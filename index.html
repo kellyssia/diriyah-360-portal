@@ -96,7 +96,7 @@
     gap: 12px;
   }
   .login-hero-logo img {
-    height: 48px;
+    height: 72px;
     width: auto;
     filter: brightness(0) invert(1);
   }
@@ -303,7 +303,7 @@
     z-index: 100;
     background: var(--cream);
     border-bottom: 1px solid var(--black);
-    padding: 18px 36px;
+    padding: 14px 36px;
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
@@ -315,25 +315,25 @@
     gap: 14px;
   }
   .topbar-brand img {
-    height: 44px;
+    height: 64px;
     width: auto;
     display: block;
   }
   .topbar-brand .fallback {
     font-family: 'Fraunces', serif;
     color: var(--black);
-    font-size: 22px;
+    font-size: 26px;
     letter-spacing: 4.5px;
     font-weight: 400;
   }
   .topbar-divider {
     width: 1px;
-    height: 30px;
+    height: 40px;
     background: var(--black);
     opacity: 0.4;
   }
   .topbar-brand-sub {
-    font-size: 10px;
+    font-size: 11px;
     color: var(--black);
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -1062,6 +1062,98 @@
     background: var(--success);
   }
 
+  /* Invitation flag — sits on the heritage image */
+  .heritage-flag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 2;
+    background: var(--cream);
+    color: var(--black);
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+  }
+
+  /* Invitation reasoning copy */
+  .heritage-reason {
+    font-size: 13px;
+    color: var(--grey);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    max-width: 520px;
+  }
+
+  /* Invitation action buttons */
+  .heritage-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .heritage-accept {
+    padding: 11px 22px;
+    background: var(--black);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .heritage-accept:hover {
+    background: var(--black-soft);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+  }
+  .heritage-decline {
+    padding: 11px 18px;
+    background: transparent;
+    color: var(--grey);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .heritage-decline:hover {
+    border-color: var(--black);
+    color: var(--black);
+  }
+
+  /* Accepted state — hides actions, reveals confirmation */
+  .heritage-confirmed {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--success);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .heritage-confirmed .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--success);
+    flex-shrink: 0;
+  }
+  #inviteCard.accepted .heritage-actions { display: none; }
+  #inviteCard.accepted .heritage-confirmed { display: flex; }
+  #inviteCard.accepted .heritage-flag {
+    background: var(--success);
+    color: #fff;
+  }
+
   /* ================ QUICK ACTIONS ================ */
   .quick-actions {
     display: grid;
@@ -1607,26 +1699,37 @@
         </div>
       </div>
 
-      <!-- 5. Heritage Moment -->
+      <!-- 5. Heritage Invitation -->
       <div class="section fade-in">
         <div class="section-header">
           <div>
-            <div class="section-eyebrow">Your next experience</div>
-            <div class="section-title">From Diriyah Heritage</div>
+            <div class="section-eyebrow">Personalised for you</div>
+            <div class="section-title">An invitation from Diriyah Heritage</div>
           </div>
-          <span class="section-link">Heritage calendar →</span>
+          <span class="section-link">Other experiences →</span>
         </div>
 
-        <div class="heritage">
-          <div class="heritage-image"></div>
+        <div class="heritage" id="inviteCard">
+          <div class="heritage-image">
+            <span class="heritage-flag">By invitation</span>
+          </div>
           <div class="heritage-body">
-            <div class="heritage-eyebrow">At-Turaif · UNESCO World Heritage Site</div>
-            <div class="heritage-title">Private Sunset Tour at <em>At-Turaif</em></div>
+            <div class="heritage-eyebrow">Diamond tier · At-Turaif, UNESCO World Heritage Site</div>
+            <div class="heritage-title">At-Turaif Private Dinner <em>Experience</em></div>
+            <p class="heritage-reason">
+              In recognition of your three heritage experiences this quarter — all rated Excellent — Diriyah Living invites you to a private dinner at At-Turaif during Eid Al-Adha week.
+            </p>
             <div class="heritage-meta">
               <div class="icon">🗓</div>
-              <div>Friday 2 May · 17:00 · Confirmed for 2 guests</div>
+              <div>Eid Al-Adha week · Two guests · Limited availability</div>
             </div>
-            <div class="heritage-confirm"><span class="dot"></span>Booking confirmed</div>
+            <div class="heritage-actions">
+              <button class="heritage-accept" id="inviteAcceptBtn" onclick="acceptInvitation()">Accept invitation</button>
+              <button class="heritage-decline" onclick="openModal('inviteDetails')">View details</button>
+            </div>
+            <div class="heritage-confirmed">
+              <span class="dot"></span>Invitation accepted — your concierge will be in touch to finalise the date
+            </div>
           </div>
         </div>
       </div>
@@ -1772,6 +1875,33 @@
   </div>
 </div>
 
+<!-- ================ MODAL: Invitation details ================ -->
+<div class="modal-overlay" id="modal-inviteDetails" onclick="if(event.target===this)closeModal('inviteDetails')">
+  <div class="modal">
+    <div class="modal-title">At-Turaif Private Dinner</div>
+    <div class="modal-sub">An invitation extended to Diamond-tier residents.</div>
+
+    <div class="modal-case-detail">
+      <div class="row"><span>Venue</span><span class="v">At-Turaif · UNESCO heritage site</span></div>
+      <div class="row"><span>Period</span><span class="v">Eid Al-Adha week</span></div>
+      <div class="row"><span>Format</span><span class="v">Private dinner · curated menu</span></div>
+      <div class="row"><span>Guests</span><span class="v">Two</span></div>
+      <div class="row"><span>Eligibility</span><span class="v">Diamond tier · verified</span></div>
+      <div class="row"><span>Availability</span><span class="v">Limited · by invitation only</span></div>
+    </div>
+
+    <p style="font-size:12px;color:var(--grey);line-height:1.6;margin-bottom:18px;">
+      Accept to confirm interest. Your Diriyah Living concierge will be in touch within 24 hours
+      to agree the date and capture any dietary or arrival preferences.
+    </p>
+
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal('inviteDetails')">Close</button>
+      <button class="btn-primary" onclick="closeModal('inviteDetails');acceptInvitation()">Accept invitation</button>
+    </div>
+  </div>
+</div>
+
 <!-- ================ TOAST ================ -->
 <div class="toast" id="toast">
   <div class="toast-icon">✓</div>
@@ -1855,6 +1985,11 @@
     toastTimer = setTimeout(function() {
       document.getElementById('toast').classList.remove('show');
     }, 3200);
+  }
+
+  function acceptInvitation() {
+    document.getElementById('inviteCard').classList.add('accepted');
+    showToast('Invitation accepted — your concierge will be in touch shortly');
   }
 
   document.querySelectorAll('.sidebar-item').forEach(function(item) {
